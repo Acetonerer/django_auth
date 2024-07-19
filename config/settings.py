@@ -30,9 +30,9 @@ SECRET_KEY = 'django-insecure-e-#epz_68o&n$v1fk@*2jn8v6q+()b=(xc-d9(+t2&u6z0&k^r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://django-auth-vyq7.onrender.com',
-                 'https://another-allowed-origin.com',
-                 'https://testfolder-sg84.onrender.com']
+ALLOWED_HOSTS = ['django-auth-vyq7.onrender.com',
+                 'another-allowed-origin.com',
+                 'testfolder-sg84.onrender.com']
 
 
 
