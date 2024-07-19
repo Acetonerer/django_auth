@@ -73,7 +73,7 @@ class RegistrationView(APIView):
         user.activation_link = activation_link
         user.save()
 
-        activation_url = f"http://localhost:8000/activate/{activation_link}/"
+        activation_url = f"https://django-auth-vyq7.onrender.com/{activation_link}/"
         send_mail(
             'Activate your account',
             f'Click the link to activate your account: {activation_url}',
