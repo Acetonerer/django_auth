@@ -30,7 +30,9 @@ SECRET_KEY = 'django-insecure-e-#epz_68o&n$v1fk@*2jn8v6q+()b=(xc-d9(+t2&u6z0&k^r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://django-auth-vyq7.onrender.com', 'https://another-allowed-origin.com']
+ALLOWED_HOSTS = ['https://django-auth-vyq7.onrender.com',
+                 'https://another-allowed-origin.com',
+                 'https://testfolder-sg84.onrender.com']
 
 
 
@@ -97,6 +99,8 @@ CORS_ALLOW_CREDENTIALS = True
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -104,9 +108,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    #'rest_framework_simplejwt.middleware.JWTRefreshTokenMiddleware',
 ]
 
 REST_FRAMEWORK = {
