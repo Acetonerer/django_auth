@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Logout Demo</title>
+</head>
+<body>
+    <h2>Login Form</h2>
+    <form id="loginForm">
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+        <button type="submit">Login</button>
+    </form>
+
+    <h2>Logout</h2>
+    <button id="logoutButton" onclick="logout()">Logout</button>
+
+    <h2>User List</h2>
+    <button id="userListButton" onclick="viewUsers()">View Users</button>
+
+    <div id="userList"></div>
+    <div id="errorMessage" style="color: red;"></div>
+
+    <script>
+        let accessToken = '';
+        let refresh_Token = ''; // Changed name to avoid conflict
+
+        async function login(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const email = formData.get('email');
+            const password = formData.get('password');
+
+            try {
+                const response = await fetch('/api/login/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Login Response:', data);
+
+                    // Save access and refresh tokens
+                    accessToken = data.access;
+                    refresh_Token = data.refresh;
+                    document.getElementById('errorMessage').textContent = ''; // Clear any previous error message
+                } else {
+                    alert('Failed to login.');
+                }
+            } catch (error) {
+                console.error('Login Error:', error);
+                alert('Failed to login. Check console for details.');
+            }
+        }
+
+        async function logout() {
+            try {
+                const response = await fetch('/api/logout/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Logout Response:', data);
+
+                    // Clear access and refresh tokens
+                    accessToken = '';
+                    refresh_Token = '';
+                    document.getElementById('errorMessage').textContent = ''; // Clear any previous error message
+                } else {
+                    alert('Failed to logout.');
+                }
+            } catch (error) {
+                console.error('Logout Error:', error);
+                alert('Failed to logout. Check console for details.');
+            }
+        }
+
+        async function refreshToken() {
+            try {
+                const response = await fetch('/api/token/refresh/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ refresh: refresh_Token })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    accessToken = data.access;
+                    return true;
+                } else {
+                    console.error('Failed to refresh token:', response.statusText);
+                    return false;
+                }
+            } catch (error) {
+                console.error('Refresh Token Error:', error);
+                return false;
+            }
+        }
+
+        async function viewUsers() {
+            document.getElementById('errorMessage').textContent = ''; // Clear previous error message
+            document.getElementById('userList').textContent = ''; // Clear previous user list
+            try {
+                let response = await fetch('/api/users/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+
+                if (response.status === 401) {
+                    // Try to refresh the token if the access token has expired
+                    const tokenRefreshed = await refreshToken();
+                    if (tokenRefreshed) {
+                        response = await fetch('/api/users/', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${accessToken}`
+                            }
+                        });
+                    }
+                }
+
+                if (response.ok) {
+                    const users = await response.json();
+                    console.log('User List:', users);
+                    document.getElementById('userList').textContent = JSON.stringify(users, null, 2);
+                } else if (response.status === 401) {
+                    document.getElementById('errorMessage').textContent = 'Доступ запрещен. Необходима авторизация.';
+                } else {
+                    alert('Failed to retrieve user list.');
+                }
+            } catch (error) {
+                console.error('View Users Error:', error);
+                alert('Failed to retrieve user list. Check console for details.');
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', login);
+    </script>
+</body>
+</html>
