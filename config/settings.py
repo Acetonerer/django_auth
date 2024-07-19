@@ -66,7 +66,7 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://localhost:8000",
-    "django-auth-vyq7.onrender.com",
+    "https://django-auth-vyq7.onrender.com",
     "https://another-allowed-origin.com"
 ]
 
