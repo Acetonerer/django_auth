@@ -56,9 +56,13 @@ INSTALLED_APPS = [
     'tokens',
 ]
 
+access_token_lifetime_minutes = int(os.getenv('ACCESS_TOKEN_LIFETIME_MINUTES'))
+refresh_token_lifetime_days = int(os.getenv('REFRESH_TOKEN_LIFETIME_DAYS'))
+
+
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': os.getenv('ACCESS_TOKEN_LIFETIME'),
-    'REFRESH_TOKEN_LIFETIME': os.getenv('REFRESH_TOKEN_LIFETIME'),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=access_token_lifetime_minutes),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=refresh_token_lifetime_days),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
     'ALGORITHM': 'HS256',
