@@ -32,7 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['django-auth-vyq7.onrender.com',
                  'another-allowed-origin.com',
-                 'testfolder-sg84.onrender.com']
+                 'testfolder-sg84.onrender.com',
+                 'test-auth-krutoi.vercel.app/']
 
 
 
@@ -70,7 +71,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "https://django-auth-vyq7.onrender.com",
     "https://another-allowed-origin.com",
-    "https://testfolder-sg84.onrender.com"
+    "https://testfolder-sg84.onrender.com",
+    "https://test-auth-krutoi.vercel.app/"
 ]
 
 # Опциональные дополнительные настройки
