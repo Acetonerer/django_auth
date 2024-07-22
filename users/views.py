@@ -24,34 +24,6 @@ import uuid
 import requests
 
 
-# class CsrfTokenView(APIView):
-#     @method_decorator(ensure_csrf_cookie)
-#     def get(self, request):
-#         csrf_token = get_token(request)
-#         return JsonResponse({'csrfToken': csrf_token})
-#
-#
-# def get_csrf_token(session):
-#     response = session.get('http://127.0.0.1:8000/get-csrf-token/')
-#     return response.json().get('csrfToken')
-#
-#
-# def with_csrf_protection(view_func):
-#     def wrapper(self, request, *args, **kwargs):
-#         try:
-#             response = view_func(self, request, *args, **kwargs)
-#             if response.status_code == 403:
-#                 # Получаем новый CSRF-токен и повторяем запрос
-#                 session = requests.Session()
-#                 csrf_token = get_csrf_token(session)
-#                 request.META['HTTP_X_CSRFTOKEN'] = csrf_token
-#                 response = view_func(self, request, *args, **kwargs)
-#             return response
-#         except Exception as e:
-#             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-#     return wrapper
-
-
 class RegistrationView(APIView):
     def post(self, request):
         email = request.data.get('email')
