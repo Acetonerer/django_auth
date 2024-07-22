@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'tokens',
 ]
 
+
 access_token_lifetime_minutes = int(os.getenv('ACCESS_TOKEN_LIFETIME_MINUTES'))
 refresh_token_lifetime_days = int(os.getenv('REFRESH_TOKEN_LIFETIME_DAYS'))
 
