@@ -25,7 +25,7 @@ def main():
     args = sys.argv
 
     port = os.environ.get('PORT', '8000')
-    execute_from_command_line([sys.argv[0], 'runserver', '0.0.0.0:' + port])
+    execute_from_command_line([sys.argv[0], 'runserver', '127.0.0.1:' + port])
 
     # Check if the command is either 'makemigrations' or 'migrate'
     if len(args) > 1 and (args[1] == 'makemigrations' or args[1] == 'migrate'):

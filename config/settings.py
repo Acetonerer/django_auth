@@ -33,7 +33,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['django-auth-vyq7.onrender.com',
                  'another-allowed-origin.com',
                  'testfolder-sg84.onrender.com',
-                 'test-auth-krutoi.vercel.app']
+                 'test-auth-krutoi.vercel.app',
+                 '127.0.0.1']
 
 
 
@@ -148,20 +149,20 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'auth_db',
-#         'PORT': '5432',
-#         'HOST': 'localhost',
-#         'USER': 'postgres',
-#         'PASSWORD': 'tankist230101',
-#     }
-# }
-
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'auth_db',
+        'PORT': '5432',
+        'HOST': 'localhost',
+        'USER': 'postgres',
+        'PASSWORD': 'tankist230101',
+    }
 }
+
+# DATABASES = {
+#     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+# }
 
 
 # Password validation
